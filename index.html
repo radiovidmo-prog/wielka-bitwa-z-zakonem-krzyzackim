@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wielka Wojna z Krzyżakami – gra historyczna</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d1b0e;
+    --parch: #f5ecd7;
+    --parch2: #ede0c4;
+    --ink: #1a0f00;
+    --ink2: #4a3000;
+    --red: #8b0000;
+    --gold: #b8860b;
+    --gold2: #d4a017;
+    --green: #2d5a1b;
+    --green2: #3d7a28;
+    --white: #fff8ee;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Lora', serif;
+    padding: 16px;
+    background-image:
+      radial-gradient(ellipse at 30% 40%, rgba(45,90,27,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 60%, rgba(139,0,0,0.15) 0%, transparent 55%);
+  }
+
+  .scroll {
+    max-width: 660px;
+    width: 100%;
+    background: var(--parch);
+    border-radius: 8px;
+    box-shadow:
+      0 0 0 4px #8b6914,
+      0 0 0 8px #5a4008,
+      0 8px 40px rgba(0,0,0,0.7),
+      inset 0 0 50px rgba(90,60,10,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scroll::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 12px;
+    background: linear-gradient(to bottom, #8b6914, #d4a017, #8b6914);
+  }
+  .scroll::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 12px;
+    background: linear-gradient(to top, #8b6914, #d4a017, #8b6914);
+  }
+
+  .inner {
+    padding: 32px 36px 36px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .shield-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .shield {
+    font-size: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+
+  .game-title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .game-title .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .game-title h1 {
+    font-family: 'Cinzel', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .game-title h1 em {
+    color: var(--red);
+    font-style: normal;
+  }
+  .divider {
+    text-align: center;
+    color: var(--gold);
+    font-size: 16px;
+    letter-spacing: 6px;
+    margin: 12px 0;
+  }
+
+  /* progress */
+  .progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    background: rgba(45,90,27,0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(180,140,20,0.3);
+  }
+  .score-item {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--ink2);
+    letter-spacing: 0.5px;
+  }
+  .score-item span { color: var(--green2); font-weight: 700; }
+  .scene-num {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 1px;
+  }
+
+  /* scene */
+  .scene-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 6px;
+  }
+  .scene-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .scene-date {
+    font-size: 13px;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 16px;
+    font-family: 'Cinzel', serif;
+  }
+
+  .story {
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .story p { margin-bottom: 10px; }
+  .story strong { color: var(--red); }
+  .story em { color: var(--ink2); font-style: italic; }
+
+  .fact {
+    background: rgba(45,90,27,0.08);
+    border-left: 3px solid var(--green2);
+    border-radius: 0 4px 4px 0;
+    padding: 10px 14px;
+    margin: 14px 0;
+    font-size: 14px;
+    color: var(--ink2);
+    line-height: 1.65;
+  }
+  .fact strong {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--green2);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .choices { display: flex; flex-direction: column; gap: 9px; margin-top: 20px; }
+  .choice-btn {
+    background: var(--parch2);
+    border: 1.5px solid #b8860b55;
+    border-radius: 4px;
+    padding: 11px 16px;
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    color: var(--ink);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+    line-height: 1.5;
+    position: relative;
+  }
+  .choice-btn::before {
+    content: '⚔';
+    color: var(--gold);
+    margin-right: 10px;
+    font-size: 13px;
+  }
+  .choice-btn:hover {
+    background: rgba(139,0,0,0.08);
+    border-color: var(--red);
+    color: var(--red);
+    transform: translateX(5px);
+  }
+
+  /* ending */
+  .ending { text-align: center; padding: 10px 0 20px; }
+  .ending-badge {
+    font-size: 48px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .ending-title {
+    font-family: 'Cinzel', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .ending-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink2);
+    margin-bottom: 12px;
+  }
+  .endings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0;
+    text-align: left;
+  }
+  .e-card {
+    background: var(--parch2);
+    border: 1px solid rgba(180,140,20,0.3);
+    border-radius: 4px;
+    padding: 10px 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink2);
+  }
+  .e-card strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+  .restart-btn {
+    background: var(--green);
+    color: var(--white);
+    border: none;
+    padding: 11px 28px;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 12px;
+    transition: background 0.2s;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+  }
+  .restart-btn:hover { background: var(--green2); }
+
+  @media (max-width:480px) {
+    .inner { padding: 24px 18px 28px; }
+    .game-title h1 { font-size: 20px; }
+    .story { font-size: 15px; }
+    .endings-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="scroll">
+  <div class="inner" id="game"></div>
+</div>
+<script>
+const scenes = {
+
+  start: {
+    sceneNum: "Scena 1 z 8",
+    label: "Rok 1409 · Kraków",
+    title: "Wielka Wojna z Krzyżakami",
+    date: "Jesteś Władysławem Jagiełłą, królem Polski i Litwy",
+    story: `
+      <p>Siedzisz na zamku wawelskim. Na stole leży list. Czytasz go i twoja twarz ciemnieje.</p>
+      <p>To <strong>wypowiedzenie wojny</strong> od wielkiego mistrza Krzyżaków – Ulryka von Jungingena.</p>
+      <p>Krzyżacy to zakon rycerski. Mają potężne zamki, dużo pieniędzy i dobrze uzbrojoną armię. Przez lata zajmowali coraz więcej ziem. Teraz wypowiedzieli wojnę, bo chcą oderwać od Litwy ziemię zwaną <em>Żmudzią</em>.</p>
+      <p><strong>Musisz działać szybko. Jak się przygotować do tej wojny?</strong></p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Krzyżacy to rycerze w białych płaszczach z czarnym krzyżem. Zakon sprowadził do Polski w 1226 roku książę Konrad Mazowiecki, żeby pomogli walczyć z Prusami. Zamiast pomóc – zajęli całe Prusy dla siebie!" },
+    choices: [
+      { text: "Wysyłam posłów do Tatarów i władcy Mołdawii – potrzebuję sojuszników!", next: "sojusznicy", pts: { dyplomacja: 2, wojsko: 0 },
+        feedback: { type: "good", text: "Doskonała decyzja! Jagiełło zrobił dokładnie to samo. Czas rozejmu przeznaczył na budowanie sojuszy. Tatarzy i władca Mołdawii rzeczywiście stanęli po stronie polsko-litewskiej." } },
+      { text: "Zaczynam od razu zbierać rycerstwo. Na wojnę!", next: "zbiorka_armii", pts: { dyplomacja: 0, wojsko: 2 },
+        feedback: { type: "ok", text: "Armia to podstawa, ale bez sojuszników idziesz sam przeciw bogatemu Zakonowi, który ma pieniądze na zaciężnych z całej Europy. Jagiełło równolegle zbierał wojska I szukał sprzymierzeńców." } }
+    ]
+  },
+
+  sojusznicy: {
+    sceneNum: "Scena 2 z 8",
+    label: "Zima 1409–1410 · Dyplomacja",
+    title: "Szukanie sojuszników",
+    date: "Rozejm trwa do lata 1410 roku",
+    story: `
+      <p>Mądrze. Czas rozejmu to czas przygotowań.</p>
+      <p>Twoje posłanie dociera do Tatarów ze Złotej Ordy – mówisz, że wspólny wróg jest silniejszy od was obu. Zgadzają się! Podobnie władca Mołdawii – twój lennik – obiecuje pomoc.</p>
+      <p>Twój brat stryjeczny <strong>Witold</strong>, wielki książę Litwy, dowodzi wojskami litewsko-ruskimi. Razem jesteście dużo silniejsi niż osobno.</p>
+      <p><strong>Czerwiec 1410. Czas ruszać. Gdzie zebrać wojska?</strong></p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Krzyżacy też szukali sojuszników! Obiecali pieniądze książętom z zachodu i przekonywali, że Jagiełło tak naprawdę jest poganinem. Ale Europa im nie uwierzyła." },
+    choices: [
+      { text: "Zbiórka na Mazowszu i przeprawa przez Wisłę na moście pontonowym.", next: "przeprawa", pts: { dyplomacja: 1, wojsko: 1 },
+        feedback: { type: "good", text: "Świetnie! Dokładnie tak zrobił Jagiełło. Most pontonowy na Wiśle to był majstersztyk – armia przeprawiła się szybko i zaskoczyła Krzyżaków, którzy pilnowali innych przepraw." } },
+      { text: "Uderzam od razu, nie czekam na pełne siły.", next: "zbiorka_armii", pts: { dyplomacja: 0, wojsko: 1 },
+        feedback: { type: "bad", text: "Ryzykowny ruch. Bez pełnej siły armii atakujesz silniejszego wroga na jego terenie. Jagiełło cierpliwie czekał, aż wszystkie oddziały się połączą." } }
+    ]
+  },
+
+  zbiorka_armii: {
+    sceneNum: "Scena 2 z 8",
+    label: "Wiosna 1410 · Mazowsze",
+    title: "Zbiórka wojsk",
+    date: "Czerwiec 1410",
+    story: `
+      <p>Tysiące rycerzy ciągnie z całej Polski i Litwy. Chorągiew za chorągwią. Rżenie koni, szczęk zbroi, śpiew.</p>
+      <p>Twój brat Witold przyprowadza wojska litewskie, ruskie, a nawet oddziały Tatarów. To największa armia, jaką Polska kiedykolwiek zebrała.</p>
+      <p>Przeprawa przez Wisłę na specjalnym moście pontonowym trwa kilka dni. W końcu cała armia jest po drugiej stronie i rusza w stronę Prus.</p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Po stronie polsko-litewskiej walczyło około 20 tysięcy rycerzy konnych. Po stronie krzyżackiej – około 16 tysięcy. Polska miała przewagę!" },
+    choices: [
+      { text: "Ruszamy wprost na Malbork – stolicę Krzyżaków!", next: "przed_bitwa", pts: { dyplomacja: 0, wojsko: 2 },
+        feedback: { type: "good", text: "Tak właśnie myślał Jagiełło! Celem strategicznym był Malbork – stolica Zakonu. Ale najpierw trzeba było pokonać armię, która stanęła na drodze pod Grunwaldem." } }
+    ]
+  },
+
+  przeprawa: {
+    sceneNum: "Scena 3 z 8",
+    label: "Czerwiec 1410 · Wisła",
+    title: "Wielka przeprawa",
+    date: "Wisła, czerwiec 1410",
+    story: `
+      <p>Inżynierowie budują most pontonowy – most z łodzi połączonych belkami. Armia przechodzi przez rzekę przez kilka dni.</p>
+      <p>Krzyżacy próbują bronić przepraw na rzece Drwęcy – ale ty obchodzisz ich przez inną drogę!</p>
+      <p>Wielki mistrz jest zaskoczony. Musi szybko zebrać siły i zastąpić ci drogę. Dogania cię niedaleko wsi <strong>Grunwald</strong>.</p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Wielki mistrz wysłał do Jagiełły heroldów z dwoma nagimi mieczami. To był rycerski gest – zaproszenie do walki. Jagiełło przyjął miecze i powiedział: 'Walczyć chcemy!'" },
+    choices: [
+      { text: "Naprzód! Ustawiamy szyki do bitwy pod Grunwaldem!", next: "przed_bitwa", pts: { dyplomacja: 1, wojsko: 1 },
+        feedback: { type: "good", text: "Dobry ruch! Manewr z mostem pontonowym i obejście krzyżackich przepraw na Drwęcy to był prawdziwy kunszt wojskowy. Wielki mistrz był zaskoczony i musiał gonić za polską armią." } }
+    ]
+  },
+
+  przed_bitwa: {
+    sceneNum: "Scena 4 z 8",
+    label: "15 lipca 1410 · Świt",
+    title: "Dwa nagie miecze",
+    date: "Rankiem 15 lipca 1410",
+    story: `
+      <p>Jest wczesny ranek. Mgła unosi się nad polami między wsiami Grunwald i Stębark.</p>
+      <p>Nagle przybywają dwaj heroldowie od Ulryka von Jungingena. Klękają i wręczają ci... <strong>dwa nagie miecze</strong>.</p>
+      <p>Jeden dla ciebie. Drugi dla Witolda. To wyzwanie do walki – rycerski gest, który mówi: „Wychodźcie z lasu i bijcie się z nami!"</p>
+      <p>Patrzysz na miecze. Ważysz je w dłoniach. Wokół ciebie stoją tysiące rycerzy.</p>
+      <p><strong>Co odpowiesz heroldowi?</strong></p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Jagiełło odpowiedział: 'Przyjmuję te miecze. Walczyć chcemy i nie ukrywamy się w lasach.' Po chwili rozległa się Bogurodzica – najstarsza polska pieśń – i armia ruszyła do boju." },
+    choices: [
+      { text: "'Przyjmuję miecze! Bogurodzica – do boju!' (ruszasz do ataku)", next: "bitwa_atak", pts: { dyplomacja: 1, wojsko: 2 },
+        feedback: { type: "ok", text: "Odważnie, ale to nie to, co zrobił Jagiełło. Atakując od razu dajesz Krzyżakom przewagę – stali w gotowości i czekali właśnie na twój ruch. Natychmiastowy atak mógł skończyć się klęską w starciu z przygotowanym wrogiem." } },
+      { text: "'Czekajmy. Niech słońce wyjdzie wyżej – i niech Krzyżacy się niecierpliwią.'", next: "bitwa_czekanie", pts: { dyplomacja: 2, wojsko: 1 },
+        feedback: { type: "good", text: "Dokładnie tak zrobił Jagiełło! Czekał kilka godzin, modlił się i obserwował. Krzyżacy stali w pełnym słońcu i niecierpliwili się. W końcu sami ruszyli do ataku – i to był ich błąd. Zmęczeni marszem trafili na wypoczętą polską armię." } }
+    ]
+  },
+
+  bitwa_atak: {
+    sceneNum: "Scena 5 z 8",
+    label: "15 lipca 1410 · Południe",
+    title: "Bitwa pod Grunwaldem!",
+    date: "Godzina 9:00 – armia rusza",
+    story: `
+      <p>Tysiące gardeł intonuje <em>Bogurodzicę</em>. Armia rusza naprzód.</p>
+      <p>Krzyżacy mają działa – armaty, które strzelają kulami. Pierwsze salwy lecą w polskie szeregi. Ale rycerze nie zatrzymują się!</p>
+      <p>Lżej uzbrojona jazda litewska Witolda uderza na prawym skrzydle. Z początku Litwini są odpierani i część z nich ucieka. Krzyżacy myślą, że wygrywają!</p>
+      <p>Ale to pułapka. <strong>W tym momencie ciężka jazda polska uderza całą siłą.</strong></p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Wielki mistrz Ulryk von Jungingen walczył osobiście na polu bitwy. Zginął w walce. To była klęska bez precedensu – prawie cała górna hierarchia Zakonu poległa lub trafiła do niewoli." },
+    choices: [
+      { text: "Uderzam rezerwowymi chorągwiami, kiedy widzę lukę w szykach wroga!", next: "bitwa_wygrana", pts: { dyplomacja: 0, wojsko: 3 },
+        feedback: { type: "good", text: "Perfekcyjne! Gdy Litwini uciekli, Krzyżacy gonili ich i zrobili lukę w swoich szykach. Polska ciężka jazda uderzyła w tę lukę i złamała krzyżacką armię. Wielki mistrz zginął." } }
+    ]
+  },
+
+  bitwa_czekanie: {
+    sceneNum: "Scena 5 z 8",
+    label: "15 lipca 1410 · Przed południem",
+    title: "Gra nerwów",
+    date: "Armie stoją naprzeciw siebie przez trzy godziny",
+    story: `
+      <p>Każe wojsku czekać. Krzyżacy stoją i czekają. Mijają godziny. Słońce wspina się coraz wyżej.</p>
+      <p>Wielki mistrz denerwuje się. Wysyła heroldów po raz drugi z ostrymi słowami. Ale ty nadal czekasz – modlisz się i obserwujesz.</p>
+      <p>W końcu Krzyżacy sami ruszają do przodu. <strong>Teraz!</strong> Bogurodzica rozlega się nad polami. Rycerstwo polskie uderza całą siłą na zmęczonych marszem Krzyżaków.</p>
+      <p>Ciężka jazda polska łamie krzyżackie szyki jak taranuje ścianę.</p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Jagiełło dowodził bitwą ze wzgórza, nie walcząc osobiście. To było mądre – mógł widzieć cały plac boju i wysyłać rozkazy. Ulryk von Jungingen walczył w pierwszej linii i zginął." },
+    choices: [
+      { text: "Litwini wracają z flanki! Zaciskamy obcęgi! Do zwycięstwa!", next: "bitwa_wygrana", pts: { dyplomacja: 1, wojsko: 2 },
+        feedback: { type: "good", text: "Doskonale! Powrót Litwinów z flanki był decydujący. Krzyżacy zostali otoczeni z dwóch stron – jak w kleszczach. Wielki mistrz zginął próbując przebić się przez polskie szeregi." } }
+    ]
+  },
+
+  bitwa_wygrana: {
+    sceneNum: "Scena 6 z 8",
+    label: "15 lipca 1410 · Wieczór",
+    title: "Zwycięstwo!",
+    date: "Bitwa trwa kilka godzin",
+    story: `
+      <p>Krzyżackie szyki się łamią. Wielki mistrz Ulryk von Jungingen pada z konia – ginie na polu bitwy. Za nim padają marszałkowie, komturowie, rycerze.</p>
+      <p>Zdobywacie <strong>chorągwie krzyżackie</strong> – 51 sztandarów wroga. To największy triumf!</p>
+      <p>Wieczorem siedzisz przy ognisku. Bitwa jest wygrana. Ale przed tobą jeszcze jedno wyzwanie – stolica Krzyżaków.</p>
+      <p><strong>Malbork czeka. Co robisz?</strong></p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Zdobyte chorągwie krzyżackie Jagiełło zawiesił w katedrze wawelskiej. 51 flag! Długo wisiały jako pamiątka wielkiego zwycięstwa. Dziś można zobaczyć ich kopie w Krakowie." },
+    choices: [
+      { text: "Ruszam natychmiast na Malbork! Nie damy im czasu na obronę!", next: "malbork_szturm", pts: { dyplomacja: 0, wojsko: 2 },
+        feedback: { type: "ok", text: "Logiczne myślenie! Niestety nawet szybki marsz nie wystarczył – komtur Henryk von Plauen zdążył zorganizować obronę. Zamek Malbork był praktycznie nie do zdobycia bez długiego oblężenia." } },
+      { text: "Najpierw zbieramy siły i odpoczywa armia – 10 dni odpoczynku.", next: "malbork_opoznienie", pts: { dyplomacja: 1, wojsko: 0 },
+        feedback: { type: "bad", text: "Błąd strategiczny! Te 10 dni kosztowało bardzo dużo. Komtur Henryk von Plauen wykorzystał każdą godzinę na organizację obrony Malborka. Historycy uważają, że to opóźnienie mogło zmienić wynik całej wojny." } }
+    ]
+  },
+
+  malbork_szturm: {
+    sceneNum: "Scena 7 z 8",
+    label: "Lipiec 1410 · Malbork",
+    title: "Oblężenie Malborka",
+    date: "25 lipca 1410 – armia staje pod Malborkiem",
+    story: `
+      <p>Docierasz pod Malbork – największy zamek w Europie. To twierdza z czerwonej cegły, otoczona fosami i murami.</p>
+      <p>Ale bramy są zamknięte. Komtur <strong>Henryk von Plauen</strong> zdążył zebrać obrońców, zgromadzić żywność i przygotować się do długiej obrony.</p>
+      <p>Oblężenie ciągnie się przez dwa miesiące. W twoim wojsku zaczyna się szaleć zaraza. Przychodzą wieści, że Krzyżacy dostaną pomoc z Niemiec.</p>
+      <p>21 września zarządzasz odwrót. Malbork nie upadł.</p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Zamek w Malborku to do dziś największy zamek z cegły na świecie. Stoi nad rzeką Nogatem. Możesz go dzisiaj zwiedzić!" },
+    choices: [
+      { text: "Mimo wszystko bitwa pod Koronowem w październiku przyniesie kolejne zwycięstwo!", next: "pokoj", pts: { wojsko: 1, dyplomacja: 0 },
+        feedback: { type: "ok", text: "Prawda! Bitwa pod Koronowem w październiku 1410 roku to kolejne zwycięstwo strony polskiej. Nie było tak wielkie jak Grunwald, ale pomogło w rokowaniach pokojowych." } }
+    ]
+  },
+
+  malbork_opoznienie: {
+    sceneNum: "Scena 7 z 8",
+    label: "Lipiec–Wrzesień 1410 · Malbork",
+    title: "Stracony czas",
+    date: "Armia dociera pod Malbork po 10 dniach odpoczynku",
+    story: `
+      <p>10 dni odpoczynku. Twoi rycerze nabierają sił – ale komtur <strong>Henryk von Plauen</strong> w tym czasie organizuje obronę zamku.</p>
+      <p>Kiedy docierasz pod Malbork, bramy są zamknięte, fosy napełnione, murów strzegą gotowi do walki obrońcy.</p>
+      <p>Dwa miesiące oblężenia. Zaraza w wojsku. Pomoc nadciągająca dla Krzyżaków. Musisz się wycofać.</p>
+      <p>W październiku wygrywasz bitwę pod Koronowem – to nieco naprawia sytuację.</p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "Gdyby Jagiełło szybciej dotarł pod Malbork, być może zamek by upadł. To jedna z największych 'co by było gdyby' polskiej historii." },
+    choices: [
+      { text: "W lutym 1411 roku – czas na pokój z Krzyżakami.", next: "pokoj", pts: { dyplomacja: 1, wojsko: 0 },
+        feedback: { type: "ok", text: "Słusznie. Mimo nieudanego oblężenia Malborka, zwycięstwo pod Grunwaldem i Koronowem dało Jagielle mocną pozycję przy stole negocjacyjnym w Toruniu." } }
+    ]
+  },
+
+  pokoj: {
+    sceneNum: "Scena 8 z 8",
+    label: "Luty 1411 · Toruń",
+    title: "Pierwszy pokój toruński",
+    date: "1 lutego 1411 roku",
+    story: `
+      <p>W Toruniu siadają naprzeciw siebie posłowie polscy i krzyżaccy. Czas podpisać pokój.</p>
+      <p>Warunki nie są idealne – Polska nie odzyskuje wszystkich ziem. Ale:</p>
+      <p>✔ <strong>Litwa odzyskuje Żmudź</strong> – ziemię, o którą zaczęła się cała wojna.</p>
+      <p>✔ <strong>Polska zatrzymuje ziemię dobrzyńską.</strong></p>
+      <p>✔ <strong>Krzyżacy mają zapłacić duże odszkodowanie.</strong></p>
+      <p>Potęga Zakonu Krzyżackiego jest złamana. Już nigdy nie będą tacy groźni. Polska staje się wielkim, szanowanym królestwem Europy.</p>
+    `,
+    fact: { label: "📜 Wiesz, że...?", text: "15 lipca – rocznica bitwy – Jagiełło ogłosił pierwszym polskim świętem państwowym. Już w rok po zwycięstwie obchodzono ten dzień uroczyście w całym królestwie!" },
+    choices: [
+      { text: "Sprawdź swój wynik jako dowódca!", next: "ending", pts: {},
+        feedback: { type: "good", text: "Dotarłeś do końca historii! Wielka Wojna 1409–1411 zmieniła mapę Europy. Zakon Krzyżacki już nigdy nie był tak potężny. Polska stała się jednym z największych królestw kontynentu." } }
+    ]
+  },
+
+  ending: { isEnding: true }
+};
+
+let state = { scene: 'start', dyplomacja: 0, wojsko: 0, pendingChoice: null };
+
+function getEnding() {
+  const d = state.dyplomacja, w = state.wojsko, t = d + w;
+  if (d >= 6) return { badge: "🕊️", color: "#2d5a1b", title: "Wielki Dyplomata", text: "Rządziłeś słowem i sprytem. Polska zyskała sojuszników i uznanie w Europie. Grunwald był twoim największym triumfem." };
+  if (w >= 6) return { badge: "⚔️", color: "#8b0000", title: "Żelazny Wódz", text: "Twoja armia była niezwyciężona. Miecz Grunwaldu będzie pamiętany przez wieki." };
+  if (t >= 7) return { badge: "👑", color: "#b8860b", title: "Mądry Król", text: "Łączyłeś dyplomację z siłą. Polska pod twoim przewodnictwem stała się mocarstwem." };
+  return { badge: "🛡️", color: "#4a3000", title: "Dzielny Rycerz", text: "Popełniałeś błędy, ale nigdy się nie poddałeś. Historia docenia wytrwałość." };
+}
+
+function renderFeedback(choice) {
+  const el = document.getElementById('game');
+  const fb = choice.feedback;
+  const typeConfig = {
+    good: { icon: "✅", label: "Dobra decyzja!", bg: "rgba(45,90,27,0.12)", border: "#2d5a1b", color: "#1a4010" },
+    ok:   { icon: "⚠️", label: "Niezbyt trafnie...", bg: "rgba(184,134,11,0.12)", border: "#b8860b", color: "#5a3e00" },
+    bad:  { icon: "❌", label: "Błąd!", bg: "rgba(139,0,0,0.10)", border: "#8b0000", color: "#8b0000" }
+  };
+  const cfg = typeConfig[fb.type] || typeConfig.ok;
+
+  el.innerHTML = `
+    <div class="shield-row"><span class="shield">🏰</span><span class="shield">⚔️</span><span class="shield">🏰</span></div>
+    <div class="game-title">
+      <div class="eyebrow">Gra historyczna · Klasa 4</div>
+      <h1>Wielka Wojna<br>z <em>Krzyżakami</em></h1>
+    </div>
+    <div class="divider">— ✦ —</div>
+    <div style="background:${cfg.bg};border:2px solid ${cfg.border};border-radius:6px;padding:20px 22px;margin:8px 0 20px;">
+      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:${cfg.color};margin-bottom:10px;letter-spacing:1px;">
+        ${cfg.icon} ${cfg.label}
+      </div>
+      <div style="font-size:15px;line-height:1.75;color:var(--ink);">${fb.text}</div>
+    </div>
+    <div style="text-align:center;margin-top:8px;">
+      <button class="restart-btn" style="background:var(--green2);" onclick="advance()">Dalej →</button>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function advance() {
+  const c = state.pendingChoice;
+  if (!c) return;
+  if (c.pts) {
+    state.dyplomacja += c.pts.dyplomacja || 0;
+    state.wojsko += c.pts.wojsko || 0;
+  }
+  state.scene = c.next;
+  state.pendingChoice = null;
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function render() {
+  const el = document.getElementById('game');
+  const s = scenes[state.scene];
+
+  if (s.isEnding) {
+    const e = getEnding();
+    el.innerHTML = `
+      <div class="shield-row"><span class="shield">🏰</span><span class="shield">⚔️</span><span class="shield">🏰</span></div>
+      <div class="ending">
+        <span class="ending-badge">${e.badge}</span>
+        <div class="ending-title" style="color:${e.color}">${e.title}</div>
+        <div class="ending-text">${e.text}</div>
+        <div class="endings-grid">
+          <div class="e-card"><strong>Dyplomacja</strong>${state.dyplomacja} pkt</div>
+          <div class="e-card"><strong>Wojsko</strong>${state.wojsko} pkt</div>
+          <div class="e-card"><strong>Bitwa</strong>15 lipca 1410</div>
+          <div class="e-card"><strong>Pokój</strong>Toruń, 1411</div>
+        </div>
+        <div class="fact"><strong>🎯 Zagraj jeszcze raz!</strong>Każda ścieżka odkrywa inne fakty. Czy wiesz, co by się stało gdybyś szybciej dobiegł do Malborka? Sprawdź!</div>
+        <div class="fact" style="margin-top:8px"><strong>📚 Poszukaj więcej!</strong>Hasła: <em>bitwa pod Grunwaldem, Zawisza Czarny, Władysław Jagiełło, I pokój toruński, zamek w Malborku</em></div>
+        <button class="restart-btn" onclick="restart()">↩ Zagraj jeszcze raz</button>
+      </div>`;
+    return;
+  }
+
+  const hasProgress = state.scene !== 'start';
+  const progressHtml = hasProgress ? `
+    <div class="progress-row">
+      <div class="score-item">Dyplomacja: <span>${state.dyplomacja}</span></div>
+      <div class="scene-num">${s.sceneNum}</div>
+      <div class="score-item">Wojsko: <span>${state.wojsko}</span></div>
+    </div>` : `<div style="text-align:center;margin-bottom:12px"><span class="scene-num">${s.sceneNum}</span></div>`;
+
+  const factHtml = s.fact ? `<div class="fact"><strong>${s.fact.label}</strong>${s.fact.text}</div>` : '';
+  const choicesHtml = s.choices.map((c,i) =>
+    `<button class="choice-btn" onclick="choose(${i})">${c.text}</button>`).join('');
+
+  el.innerHTML = `
+    <div class="shield-row"><span class="shield">🏰</span><span class="shield">⚔️</span><span class="shield">🏰</span></div>
+    <div class="game-title">
+      <div class="eyebrow">Gra historyczna · Klasa 4</div>
+      <h1>Wielka Wojna<br>z <em>Krzyżakami</em></h1>
+    </div>
+    <div class="divider">— ✦ —</div>
+    ${progressHtml}
+    <div class="scene-label">${s.label}</div>
+    <div class="scene-title">${s.title}</div>
+    <div class="scene-date">${s.date}</div>
+    <div class="story">${s.story}</div>
+    ${factHtml}
+    <div class="choices">${choicesHtml}</div>`;
+}
+
+function choose(i) {
+  const c = scenes[state.scene].choices[i];
+  state.pendingChoice = c;
+  if (c.feedback) {
+    renderFeedback(c);
+  } else {
+    advance();
+  }
+}
+
+function restart() {
+  state = { scene: 'start', dyplomacja: 0, wojsko: 0, pendingChoice: null };
+  render();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+render();
+</script>
+</body>
+</html>
