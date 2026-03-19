@@ -221,11 +221,7 @@
 
   /* ending */
   .ending { text-align: center; padding: 10px 0 20px; }
-  .ending-badge {
-    font-size: 48px;
-    margin-bottom: 10px;
-    display: block;
-  }
+  /* .ending-badge handled by .ending-badge-wrap */
   .ending-title {
     font-family: 'Cinzel', serif;
     font-size: 20px;
@@ -285,6 +281,72 @@
     .story { font-size: 15px; }
     .endings-grid { grid-template-columns: 1fr; }
   }
+
+  /* Heraldic ornaments replacing emoji */
+  .ornament-hdr {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    color: var(--gold);
+    letter-spacing: 10px;
+    display: block;
+    text-align: center;
+  }
+
+  /* Feedback icons */
+  .fb-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    font-family: 'Cinzel', serif;
+    margin-right: 4px;
+    vertical-align: middle;
+    flex-shrink: 0;
+  }
+  .fb-good { background: #2d5a1b; color: #fff; }
+  .fb-ok   { background: #b8860b; color: #fff; }
+  .fb-bad  { background: #8b0000; color: #fff; }
+
+  /* Ending badge */
+  .ending-badge-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+  .ending-badge {
+    font-family: 'Cinzel', serif;
+    font-size: 42px;
+    color: var(--gold);
+    line-height: 1;
+    display: block;
+  }
+  .ending-badge-label {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.7;
+  }
+
+  /* Fact box label without emoji */
+  .fact strong {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green2);
+    display: block;
+    margin-bottom: 5px;
+    padding-left: 12px;
+    border-left: 2px solid var(--green2);
+  }
 </style>
 </head>
 <body>
@@ -300,17 +362,17 @@ const scenes = {
     title: "Wielka Wojna z Krzyżakami",
     date: "Jesteś Władysławem Jagiełłą, królem Polski i Litwy",
     story: `
-      <p>Siedzisz na zamku wawelskim. Na stole leży list. Czytasz go i twoja twarz ciemnieje.</p>
+      <p>Siedzisz na zamku wawelskim. Na stole leży list. Czytasz go i twarz ci blednie.</p>
       <p>To <strong>wypowiedzenie wojny</strong> od wielkiego mistrza Krzyżaków – Ulryka von Jungingena.</p>
       <p>Krzyżacy to zakon rycerski. Mają potężne zamki, dużo pieniędzy i dobrze uzbrojoną armię. Przez lata zajmowali coraz więcej ziem. Teraz wypowiedzieli wojnę, bo chcą oderwać od Litwy ziemię zwaną <em>Żmudzią</em>.</p>
       <p><strong>Musisz działać szybko. Jak się przygotować do tej wojny?</strong></p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Krzyżacy to rycerze w białych płaszczach z czarnym krzyżem. Zakon sprowadził do Polski w 1226 roku książę Konrad Mazowiecki, żeby pomogli walczyć z Prusami. Zamiast pomóc – zajęli całe Prusy dla siebie!" },
+    fact: { label: "Wiesz, że...?", text: "Krzyżacy to rycerze w białych płaszczach z czarnym krzyżem. Zakon do Polski w 1226 roku sprowadził książę Konrad Mazowiecki, żeby pomogli walczyć z Prusami. Zamiast pomóc – zajęli całe Prusy dla siebie!" },
     choices: [
       { text: "Wysyłam posłów do Tatarów i władcy Mołdawii – potrzebuję sojuszników!", next: "sojusznicy", pts: { dyplomacja: 2, wojsko: 0 },
         feedback: { type: "good", text: "Doskonała decyzja! Jagiełło zrobił dokładnie to samo. Czas rozejmu przeznaczył na budowanie sojuszy. Tatarzy i władca Mołdawii rzeczywiście stanęli po stronie polsko-litewskiej." } },
       { text: "Zaczynam od razu zbierać rycerstwo. Na wojnę!", next: "zbiorka_armii", pts: { dyplomacja: 0, wojsko: 2 },
-        feedback: { type: "ok", text: "Armia to podstawa, ale bez sojuszników idziesz sam przeciw bogatemu Zakonowi, który ma pieniądze na zaciężnych z całej Europy. Jagiełło równolegle zbierał wojska I szukał sprzymierzeńców." } }
+        feedback: { type: "ok", text: "Armia to podstawa, ale bez sojuszników idziesz sam przeciw bogatemu Zakonowi, który ma pieniądze na zaciężnych z całej Europy. Jagiełło równolegle zbierał wojska i szukał sprzymierzeńców." } }
     ]
   },
 
@@ -321,11 +383,11 @@ const scenes = {
     date: "Rozejm trwa do lata 1410 roku",
     story: `
       <p>Mądrze. Czas rozejmu to czas przygotowań.</p>
-      <p>Twoje posłanie dociera do Tatarów ze Złotej Ordy – mówisz, że wspólny wróg jest silniejszy od was obu. Zgadzają się! Podobnie władca Mołdawii – twój lennik – obiecuje pomoc.</p>
+      <p>Twoi posłowie docierają do Tatarów ze Złotej Ordy z wiadomością, że wspólny wróg jest groźniejszy niż waśnie między wami. Zgadzają się! Podobnie władca Mołdawii – twój lennik – obiecuje pomoc.</p>
       <p>Twój brat stryjeczny <strong>Witold</strong>, wielki książę Litwy, dowodzi wojskami litewsko-ruskimi. Razem jesteście dużo silniejsi niż osobno.</p>
       <p><strong>Czerwiec 1410. Czas ruszać. Gdzie zebrać wojska?</strong></p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Krzyżacy też szukali sojuszników! Obiecali pieniądze książętom z zachodu i przekonywali, że Jagiełło tak naprawdę jest poganinem. Ale Europa im nie uwierzyła." },
+    fact: { label: "Wiesz, że...?", text: "Krzyżacy też szukali sojuszników! Obiecali pieniądze książętom z zachodu i przekonywali, że Jagiełło tak naprawdę jest poganinem. Ale Europa im nie uwierzyła." },
     choices: [
       { text: "Zbiórka na Mazowszu i przeprawa przez Wisłę na moście pontonowym.", next: "przeprawa", pts: { dyplomacja: 1, wojsko: 1 },
         feedback: { type: "good", text: "Świetnie! Dokładnie tak zrobił Jagiełło. Most pontonowy na Wiśle to był majstersztyk – armia przeprawiła się szybko i zaskoczyła Krzyżaków, którzy pilnowali innych przepraw." } },
@@ -340,11 +402,11 @@ const scenes = {
     title: "Zbiórka wojsk",
     date: "Czerwiec 1410",
     story: `
-      <p>Tysiące rycerzy ciągnie z całej Polski i Litwy. Chorągiew za chorągwią. Rżenie koni, szczęk zbroi, śpiew.</p>
-      <p>Twój brat Witold przyprowadza wojska litewskie, ruskie, a nawet oddziały Tatarów. To największa armia, jaką Polska kiedykolwiek zebrała.</p>
+      <p>Tysiące rycerzy ciągną z całej Polski i Litwy. Chorągiew za chorągwią. Rżenie koni, szczęk zbroi, śpiew.</p>
+      <p>Twój brat stryjeczny Witold przyprowadza wojska litewskie, ruskie, a nawet oddziały Tatarów. To największa armia, jaką Polska kiedykolwiek zebrała.</p>
       <p>Przeprawa przez Wisłę na specjalnym moście pontonowym trwa kilka dni. W końcu cała armia jest po drugiej stronie i rusza w stronę Prus.</p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Po stronie polsko-litewskiej walczyło około 20 tysięcy rycerzy konnych. Po stronie krzyżackiej – około 16 tysięcy. Polska miała przewagę!" },
+    fact: { label: "Wiesz, że...?", text: "Po stronie polsko-litewskiej walczyło około 20 tysięcy rycerzy konnych. Po stronie krzyżackiej – około 16 tysięcy. Polska miała przewagę!" },
     choices: [
       { text: "Ruszamy wprost na Malbork – stolicę Krzyżaków!", next: "przed_bitwa", pts: { dyplomacja: 0, wojsko: 2 },
         feedback: { type: "good", text: "Tak właśnie myślał Jagiełło! Celem strategicznym był Malbork – stolica Zakonu. Ale najpierw trzeba było pokonać armię, która stanęła na drodze pod Grunwaldem." } }
@@ -361,7 +423,7 @@ const scenes = {
       <p>Krzyżacy próbują bronić przepraw na rzece Drwęcy – ale ty obchodzisz ich przez inną drogę!</p>
       <p>Wielki mistrz jest zaskoczony. Musi szybko zebrać siły i zastąpić ci drogę. Dogania cię niedaleko wsi <strong>Grunwald</strong>.</p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Wielki mistrz wysłał do Jagiełły heroldów z dwoma nagimi mieczami. To był rycerski gest – zaproszenie do walki. Jagiełło przyjął miecze i powiedział: 'Walczyć chcemy!'" },
+    fact: { label: "Wiesz, że...?", text: "Wielki mistrz wysłał do Jagiełły heroldów z dwoma nagimi mieczami. To był rycerski gest – zaproszenie do walki. Jagiełło przyjął miecze i powiedział: 'Walczyć chcemy!'" },
     choices: [
       { text: "Naprzód! Ustawiamy szyki do bitwy pod Grunwaldem!", next: "przed_bitwa", pts: { dyplomacja: 1, wojsko: 1 },
         feedback: { type: "good", text: "Dobry ruch! Manewr z mostem pontonowym i obejście krzyżackich przepraw na Drwęcy to był prawdziwy kunszt wojskowy. Wielki mistrz był zaskoczony i musiał gonić za polską armią." } }
@@ -380,7 +442,7 @@ const scenes = {
       <p>Patrzysz na miecze. Ważysz je w dłoniach. Wokół ciebie stoją tysiące rycerzy.</p>
       <p><strong>Co odpowiesz heroldowi?</strong></p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Jagiełło odpowiedział: 'Przyjmuję te miecze. Walczyć chcemy i nie ukrywamy się w lasach.' Po chwili rozległa się Bogurodzica – najstarsza polska pieśń – i armia ruszyła do boju." },
+    fact: { label: "Wiesz, że...?", text: "Jagiełło odpowiedział: 'Przyjmuję te miecze. Walczyć chcemy i nie ukrywamy się w lasach.' Po chwili rozległa się Bogurodzica – najstarsza polska pieśń – i armia ruszyła do boju." },
     choices: [
       { text: "'Przyjmuję miecze! Bogurodzica – do boju!' (ruszasz do ataku)", next: "bitwa_atak", pts: { dyplomacja: 1, wojsko: 2 },
         feedback: { type: "ok", text: "Odważnie, ale to nie to, co zrobił Jagiełło. Atakując od razu dajesz Krzyżakom przewagę – stali w gotowości i czekali właśnie na twój ruch. Natychmiastowy atak mógł skończyć się klęską w starciu z przygotowanym wrogiem." } },
@@ -400,7 +462,7 @@ const scenes = {
       <p>Lżej uzbrojona jazda litewska Witolda uderza na prawym skrzydle. Z początku Litwini są odpierani i część z nich ucieka. Krzyżacy myślą, że wygrywają!</p>
       <p>Ale to pułapka. <strong>W tym momencie ciężka jazda polska uderza całą siłą.</strong></p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Wielki mistrz Ulryk von Jungingen walczył osobiście na polu bitwy. Zginął w walce. To była klęska bez precedensu – prawie cała górna hierarchia Zakonu poległa lub trafiła do niewoli." },
+    fact: { label: "Wiesz, że...?", text: "Wielki mistrz Ulryk von Jungingen walczył osobiście na polu bitwy. Zginął w walce. To była klęska bez precedensu – prawie cała górna hierarchia Zakonu poległa lub trafiła do niewoli." },
     choices: [
       { text: "Uderzam rezerwowymi chorągwiami, kiedy widzę lukę w szykach wroga!", next: "bitwa_wygrana", pts: { dyplomacja: 0, wojsko: 3 },
         feedback: { type: "good", text: "Perfekcyjne! Gdy Litwini uciekli, Krzyżacy gonili ich i zrobili lukę w swoich szykach. Polska ciężka jazda uderzyła w tę lukę i złamała krzyżacką armię. Wielki mistrz zginął." } }
@@ -413,14 +475,14 @@ const scenes = {
     title: "Gra nerwów",
     date: "Armie stoją naprzeciw siebie przez trzy godziny",
     story: `
-      <p>Każe wojsku czekać. Krzyżacy stoją i czekają. Mijają godziny. Słońce wspina się coraz wyżej.</p>
+      <p>Każesz wojsku czekać. Krzyżacy stoją i czekają. Mijają godziny. Słońce wspina się coraz wyżej.</p>
       <p>Wielki mistrz denerwuje się. Wysyła heroldów po raz drugi z ostrymi słowami. Ale ty nadal czekasz – modlisz się i obserwujesz.</p>
       <p>W końcu Krzyżacy sami ruszają do przodu. <strong>Teraz!</strong> Bogurodzica rozlega się nad polami. Rycerstwo polskie uderza całą siłą na zmęczonych marszem Krzyżaków.</p>
-      <p>Ciężka jazda polska łamie krzyżackie szyki jak taranuje ścianę.</p>
+      <p>Ciężka jazda polska łamie krzyżackie szyki.</p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Jagiełło dowodził bitwą ze wzgórza, nie walcząc osobiście. To było mądre – mógł widzieć cały plac boju i wysyłać rozkazy. Ulryk von Jungingen walczył w pierwszej linii i zginął." },
+    fact: { label: "Wiesz, że...?", text: "Jagiełło dowodził bitwą ze wzgórza, nie walcząc osobiście. To było mądre – mógł widzieć cały plac boju i wysyłać rozkazy. Ulryk von Jungingen walczył w pierwszej linii i zginął." },
     choices: [
-      { text: "Litwini wracają z flanki! Zaciskamy obcęgi! Do zwycięstwa!", next: "bitwa_wygrana", pts: { dyplomacja: 1, wojsko: 2 },
+      { text: "Litwini wracają z flanki! Zaciskamy kleszcze! Do zwycięstwa!", next: "bitwa_wygrana", pts: { dyplomacja: 1, wojsko: 2 },
         feedback: { type: "good", text: "Doskonale! Powrót Litwinów z flanki był decydujący. Krzyżacy zostali otoczeni z dwóch stron – jak w kleszczach. Wielki mistrz zginął próbując przebić się przez polskie szeregi." } }
     ]
   },
@@ -436,12 +498,12 @@ const scenes = {
       <p>Wieczorem siedzisz przy ognisku. Bitwa jest wygrana. Ale przed tobą jeszcze jedno wyzwanie – stolica Krzyżaków.</p>
       <p><strong>Malbork czeka. Co robisz?</strong></p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Zdobyte chorągwie krzyżackie Jagiełło zawiesił w katedrze wawelskiej. 51 flag! Długo wisiały jako pamiątka wielkiego zwycięstwa. Dziś można zobaczyć ich kopie w Krakowie." },
+    fact: { label: "Wiesz, że...?", text: "Zdobyte chorągwie krzyżackie Jagiełło zawiesił w katedrze wawelskiej. 51 flag! Długo wisiały jako pamiątka wielkiego zwycięstwa. Dziś można zobaczyć ich kopie w Krakowie." },
     choices: [
       { text: "Ruszam natychmiast na Malbork! Nie damy im czasu na obronę!", next: "malbork_szturm", pts: { dyplomacja: 0, wojsko: 2 },
-        feedback: { type: "ok", text: "Logiczne myślenie! Niestety nawet szybki marsz nie wystarczył – komtur Henryk von Plauen zdążył zorganizować obronę. Zamek Malbork był praktycznie nie do zdobycia bez długiego oblężenia." } },
+        feedback: { type: "good", text: "Dobra decyzja! Jagiełło rzeczywiście ruszył na Malbork tak szybko jak mógł. Niestety nawet to nie wystarczyło – komtur Henryk von Plauen był szybszy i zdążył zorganizować obronę. Malbork był po prostu za silny." } },
       { text: "Najpierw zbieramy siły i odpoczywa armia – 10 dni odpoczynku.", next: "malbork_opoznienie", pts: { dyplomacja: 1, wojsko: 0 },
-        feedback: { type: "bad", text: "Błąd strategiczny! Te 10 dni kosztowało bardzo dużo. Komtur Henryk von Plauen wykorzystał każdą godzinę na organizację obrony Malborka. Historycy uważają, że to opóźnienie mogło zmienić wynik całej wojny." } }
+        feedback: { type: "bad", text: "Błąd! Każda godzina zwłoki to czas dla Krzyżaków na organizację obrony. Komtur Henryk von Plauen wykorzystał to opóźnienie w pełni. Historycy uważają, że to właśnie te stracone dni mogły zadecydować o tym, że Malbork nigdy nie upadł." } }
     ]
   },
 
@@ -453,10 +515,10 @@ const scenes = {
     story: `
       <p>Docierasz pod Malbork – największy zamek w Europie. To twierdza z czerwonej cegły, otoczona fosami i murami.</p>
       <p>Ale bramy są zamknięte. Komtur <strong>Henryk von Plauen</strong> zdążył zebrać obrońców, zgromadzić żywność i przygotować się do długiej obrony.</p>
-      <p>Oblężenie ciągnie się przez dwa miesiące. W twoim wojsku zaczyna się szaleć zaraza. Przychodzą wieści, że Krzyżacy dostaną pomoc z Niemiec.</p>
+      <p>Oblężenie ciągnie się przez dwa miesiące. W wojsku szerzy się zaraza. Nadchodzą wieści, że Krzyżacy dostaną pomoc z Niemiec.</p>
       <p>21 września zarządzasz odwrót. Malbork nie upadł.</p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Zamek w Malborku to do dziś największy zamek z cegły na świecie. Stoi nad rzeką Nogatem. Możesz go dzisiaj zwiedzić!" },
+    fact: { label: "Wiesz, że...?", text: "Zamek w Malborku to do dziś największy zamek z cegły na świecie. Stoi nad rzeką Nogatem. Możesz go dzisiaj zwiedzić!" },
     choices: [
       { text: "Mimo wszystko bitwa pod Koronowem w październiku przyniesie kolejne zwycięstwo!", next: "pokoj", pts: { wojsko: 1, dyplomacja: 0 },
         feedback: { type: "ok", text: "Prawda! Bitwa pod Koronowem w październiku 1410 roku to kolejne zwycięstwo strony polskiej. Nie było tak wielkie jak Grunwald, ale pomogło w rokowaniach pokojowych." } }
@@ -471,10 +533,10 @@ const scenes = {
     story: `
       <p>10 dni odpoczynku. Twoi rycerze nabierają sił – ale komtur <strong>Henryk von Plauen</strong> w tym czasie organizuje obronę zamku.</p>
       <p>Kiedy docierasz pod Malbork, bramy są zamknięte, fosy napełnione, murów strzegą gotowi do walki obrońcy.</p>
-      <p>Dwa miesiące oblężenia. Zaraza w wojsku. Pomoc nadciągająca dla Krzyżaków. Musisz się wycofać.</p>
+      <p>Dwa miesiące oblężenia. W wojsku szerzy się zaraza. Z Niemiec nadciąga pomoc dla Krzyżaków. Musisz się wycofać.</p>
       <p>W październiku wygrywasz bitwę pod Koronowem – to nieco naprawia sytuację.</p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "Gdyby Jagiełło szybciej dotarł pod Malbork, być może zamek by upadł. To jedna z największych 'co by było gdyby' polskiej historii." },
+    fact: { label: "Wiesz, że...?", text: "Gdyby Jagiełło szybciej dotarł pod Malbork, być może zamek by upadł. To jedna z największych 'co by było gdyby' polskiej historii." },
     choices: [
       { text: "W lutym 1411 roku – czas na pokój z Krzyżakami.", next: "pokoj", pts: { dyplomacja: 1, wojsko: 0 },
         feedback: { type: "ok", text: "Słusznie. Mimo nieudanego oblężenia Malborka, zwycięstwo pod Grunwaldem i Koronowem dało Jagielle mocną pozycję przy stole negocjacyjnym w Toruniu." } }
@@ -494,7 +556,7 @@ const scenes = {
       <p>✔ <strong>Krzyżacy mają zapłacić duże odszkodowanie.</strong></p>
       <p>Potęga Zakonu Krzyżackiego jest złamana. Już nigdy nie będą tacy groźni. Polska staje się wielkim, szanowanym królestwem Europy.</p>
     `,
-    fact: { label: "📜 Wiesz, że...?", text: "15 lipca – rocznica bitwy – Jagiełło ogłosił pierwszym polskim świętem państwowym. Już w rok po zwycięstwie obchodzono ten dzień uroczyście w całym królestwie!" },
+    fact: { label: "Wiesz, że...?", text: "15 lipca – rocznica bitwy – Jagiełło ogłosił pierwszym polskim świętem państwowym. Już w rok po zwycięstwie obchodzono ten dzień uroczyście w całym królestwie!" },
     choices: [
       { text: "Sprawdź swój wynik jako dowódca!", next: "ending", pts: {},
         feedback: { type: "good", text: "Dotarłeś do końca historii! Wielka Wojna 1409–1411 zmieniła mapę Europy. Zakon Krzyżacki już nigdy nie był tak potężny. Polska stała się jednym z największych królestw kontynentu." } }
@@ -508,10 +570,10 @@ let state = { scene: 'start', dyplomacja: 0, wojsko: 0, pendingChoice: null };
 
 function getEnding() {
   const d = state.dyplomacja, w = state.wojsko, t = d + w;
-  if (d >= 6) return { badge: "🕊️", color: "#2d5a1b", title: "Wielki Dyplomata", text: "Rządziłeś słowem i sprytem. Polska zyskała sojuszników i uznanie w Europie. Grunwald był twoim największym triumfem." };
-  if (w >= 6) return { badge: "⚔️", color: "#8b0000", title: "Żelazny Wódz", text: "Twoja armia była niezwyciężona. Miecz Grunwaldu będzie pamiętany przez wieki." };
-  if (t >= 7) return { badge: "👑", color: "#b8860b", title: "Mądry Król", text: "Łączyłeś dyplomację z siłą. Polska pod twoim przewodnictwem stała się mocarstwem." };
-  return { badge: "🛡️", color: "#4a3000", title: "Dzielny Rycerz", text: "Popełniałeś błędy, ale nigdy się nie poddałeś. Historia docenia wytrwałość." };
+  if (d >= 6) return { badge: "✦", badgeLabel: "Dyplomata", color: "#2d5a1b", title: "Wielki Dyplomata", text: "Rządziłeś słowem i sprytem. Polska zyskała sojuszników i uznanie w Europie. Grunwald był twoim największym triumfem." };
+  if (w >= 6) return { badge: "✠", badgeLabel: "Wódz", color: "#8b0000", title: "Żelazny Wódz", text: "Twoja armia była niezwyciężona. Miecz Grunwaldu będzie pamiętany przez wieki." };
+  if (t >= 7) return { badge: "❧", badgeLabel: "Król", color: "#b8860b", title: "Mądry Król", text: "Łączyłeś dyplomację z siłą. Polska pod twoim przewodnictwem stała się mocarstwem." };
+  return { badge: "◈", badgeLabel: "Rycerz", color: "#4a3000", title: "Dzielny Rycerz", text: "Popełniałeś błędy, ale nigdy się nie poddałeś. Historia docenia wytrwałość." };
 }
 
 function renderFeedback(choice) {
@@ -525,15 +587,15 @@ function renderFeedback(choice) {
   const cfg = typeConfig[fb.type] || typeConfig.ok;
 
   el.innerHTML = `
-    <div class="shield-row"><span class="shield">🏰</span><span class="shield">⚔️</span><span class="shield">🏰</span></div>
+    <div class="shield-row"><span class="ornament-hdr">✦&nbsp;&nbsp;✠&nbsp;&nbsp;✦</span></div>
     <div class="game-title">
       <div class="eyebrow">Gra historyczna · Klasa 4</div>
       <h1>Wielka Wojna<br>z <em>Krzyżakami</em></h1>
     </div>
     <div class="divider">— ✦ —</div>
     <div style="background:${cfg.bg};border:2px solid ${cfg.border};border-radius:6px;padding:20px 22px;margin:8px 0 20px;">
-      <div style="font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:${cfg.color};margin-bottom:10px;letter-spacing:1px;">
-        ${cfg.icon} ${cfg.label}
+      <div style="display:flex;align-items:center;gap:8px;font-family:'Cinzel',serif;font-size:13px;font-weight:700;color:${cfg.color};margin-bottom:10px;letter-spacing:1px;">
+        ${cfg.icon}<span>${cfg.label}</span>
       </div>
       <div style="font-size:15px;line-height:1.75;color:var(--ink);">${fb.text}</div>
     </div>
@@ -563,9 +625,9 @@ function render() {
   if (s.isEnding) {
     const e = getEnding();
     el.innerHTML = `
-      <div class="shield-row"><span class="shield">🏰</span><span class="shield">⚔️</span><span class="shield">🏰</span></div>
+      <div class="shield-row"><span class="ornament-hdr">✦&nbsp;&nbsp;✠&nbsp;&nbsp;✦</span></div>
       <div class="ending">
-        <span class="ending-badge">${e.badge}</span>
+        <div class="ending-badge-wrap"><span class="ending-badge">${e.badge}</span><span class="ending-badge-label">${e.badgeLabel}</span></div>
         <div class="ending-title" style="color:${e.color}">${e.title}</div>
         <div class="ending-text">${e.text}</div>
         <div class="endings-grid">
@@ -574,8 +636,8 @@ function render() {
           <div class="e-card"><strong>Bitwa</strong>15 lipca 1410</div>
           <div class="e-card"><strong>Pokój</strong>Toruń, 1411</div>
         </div>
-        <div class="fact"><strong>🎯 Zagraj jeszcze raz!</strong>Każda ścieżka odkrywa inne fakty. Czy wiesz, co by się stało gdybyś szybciej dobiegł do Malborka? Sprawdź!</div>
-        <div class="fact" style="margin-top:8px"><strong>📚 Poszukaj więcej!</strong>Hasła: <em>bitwa pod Grunwaldem, Zawisza Czarny, Władysław Jagiełło, I pokój toruński, zamek w Malborku</em></div>
+        <div class="fact"><strong>Zagraj jeszcze raz!</strong>Każda ścieżka odkrywa inne fakty. Czy wiesz, co by się stało gdybyś szybciej dobiegł do Malborka? Sprawdź!</div>
+        <div class="fact" style="margin-top:8px"><strong>Poszukaj więcej!</strong>Hasła: <em>bitwa pod Grunwaldem, Zawisza Czarny, Władysław Jagiełło, I pokój toruński, zamek w Malborku</em></div>
         <button class="restart-btn" onclick="restart()">↩ Zagraj jeszcze raz</button>
       </div>`;
     return;
@@ -594,7 +656,7 @@ function render() {
     `<button class="choice-btn" onclick="choose(${i})">${c.text}</button>`).join('');
 
   el.innerHTML = `
-    <div class="shield-row"><span class="shield">🏰</span><span class="shield">⚔️</span><span class="shield">🏰</span></div>
+    <div class="shield-row"><span class="ornament-hdr">✦&nbsp;&nbsp;✠&nbsp;&nbsp;✦</span></div>
     <div class="game-title">
       <div class="eyebrow">Gra historyczna · Klasa 4</div>
       <h1>Wielka Wojna<br>z <em>Krzyżakami</em></h1>
