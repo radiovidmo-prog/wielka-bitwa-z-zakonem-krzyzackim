@@ -393,12 +393,12 @@ const scenes = {
     title: "Wielka Wojna z Krzyżakami",
     date: "Jesteś Władysławem Jagiełłą, królem Polski i Litwy",
     story: `
-      <p>Siedzisz na zamku wawelskim. Na stole leży list. Czytasz go i twarz ci blednie.</p>
-      <p>To <strong>wypowiedzenie wojny</strong> od wielkiego mistrza Krzyżaków – Ulryka von Jungingena.</p>
+      <p>Siedzisz na zamku wawelskim. Otrzymujesz pismo. Czytasz je i twarz ci blednie.</p>
+      <p>Ulryk von Jungingen – wielki mistrz Krzyżaków – <strong>wypowiada ci wojnę</strong>.</p>
       <p>Krzyżacy to zakon rycerski. Mają potężne zamki, dużo pieniędzy i dobrze uzbrojoną armię. Przez lata zajmowali coraz więcej ziem. Teraz wypowiedzieli wojnę, bo chcą oderwać od Litwy ziemię zwaną <em>Żmudzią</em>.</p>
       <p><strong>Musisz działać szybko. Jak się przygotować do tej wojny?</strong></p>
     `,
-    fact: { label: "Wiesz, że...?", text: "Krzyżacy to rycerze w białych płaszczach z czarnym krzyżem. Krzyżaków do Polski w 1226 roku sprowadził książę Konrad Mazowiecki, żeby pomogli walczyć z Prusami. Zamiast pomóc – zajęli całe Prusy dla siebie!" },
+    fact: { label: "Wiesz, że...?", text: "Krzyżaków sprowadził do Polski w 1226 roku książę Konrad Mazowiecki, żeby pomogli walczyć z Prusami. Zamiast pomóc – zagarnęli Prusy dla siebie!" },
     choices: [
       { text: "Wysyłam posłów do Tatarów i władcy Mołdawii – potrzebuję sojuszników!", next: "sojusznicy", pts: { dyplomacja: 2, wojsko: 0 },
         feedback: { type: "good", text: "Doskonała decyzja! Jagiełło zrobił dokładnie to samo. Czas rozejmu przeznaczył na budowanie sojuszy. Tatarzy i władca Mołdawii rzeczywiście stanęli po stronie polsko-litewskiej." } },
@@ -421,7 +421,7 @@ const scenes = {
     fact: { label: "Wiesz, że...?", text: "Krzyżacy też szukali sojuszników! Obiecali pieniądze książętom z zachodu i przekonywali, że Jagiełło tak naprawdę jest poganinem. Ale Europa im nie uwierzyła." },
     choices: [
       { text: "Zbiórka na Mazowszu i przeprawa przez Wisłę na moście pontonowym.", next: "przeprawa", pts: { dyplomacja: 1, wojsko: 1 },
-        feedback: { type: "good", text: "Świetnie! Dokładnie tak zrobił Jagiełło. Most pontonowy na Wiśle to był majstersztyk – armia przeprawiła się szybko i zaskoczyła Krzyżaków, którzy pilnowali innych przepraw." } },
+        feedback: { type: "good", text: "Świetnie! Dokładnie tak zrobił Jagiełło. Most pontonowy na Wiśle to był majstersztyk – konstrukcja z wielu łodzi połączonych belkami i linami, z pomostem ułożonym na wierzchu, która pozwoliła całej armii przeprawić się przez rzekę w miejscu, którego Krzyżacy nie strzegli." } },
       { text: "Uderzam od razu, nie czekam na pełne siły.", next: "zbiorka_armii", pts: { dyplomacja: 0, wojsko: 1 },
         feedback: { type: "bad", text: "Ryzykowny ruch. Bez pełnej siły armii atakujesz silniejszego wroga na jego terenie. Jagiełło cierpliwie czekał, aż wszystkie oddziały się połączą." } }
     ]
@@ -453,16 +453,16 @@ const scenes = {
     title: "Wielka przeprawa",
     date: "Wisła, czerwiec 1410",
     story: `
-      <p>Inżynierowie budują most pontonowy – most z łodzi połączonych belkami. Armia przechodzi przez rzekę przez kilka dni.</p>
-      <p>Krzyżacy próbują bronić przepraw na rzece Drwęcy – ale ty obchodzisz ich przez inną drogę!</p>
+      <p>Inżynierowie budują most pontonowy – most z łodzi połączonych belkami. Przejście całej armii zajęło kilka dni.</p>
+      <p>Krzyżacy próbują bronić przepraw na rzece Drwęcy, bo nie spodziewają się, że ty przeprawisz się w innym miejscu!</p>
       <p>Wielki mistrz jest zaskoczony. Musi szybko zebrać siły i zastąpić ci drogę. Dogania cię niedaleko wsi <strong>Grunwald</strong>.</p>
     `,
-    fact: { label: "Wiesz, że...?", text: "Most pontonowy zbudowany przez wojska Jagiełły liczył ponad 100 metrów. Przeprawa całej armii trwała 3 dni. Dzięki niemu Jagiełło zaskoczył Krzyżaków – pilnowali innych przepraw na rzece Drwęcy." },
+    fact: { label: "Wiesz, że...?", text: "Most pontonowy liczył ponad 100 metrów. Został przygotowany potajemnie zimą i wiosną 1410 roku w Kozienicach, skąd jego elementy – łodzie, belki i deski – spławiono Wisłą w dół rzeki 29 czerwca, a następnie 30 czerwca w zaledwie pół dnia zmontowano powyżej Czerwińska, tworząc gotową do użycia przeprawę." },
     choices: [
       { text: "Naprzód! Ustawiamy szyki do bitwy pod Grunwaldem!", next: "przed_bitwa", pts: { dyplomacja: 1, wojsko: 1 },
         feedback: { type: "good", text: "Manewr z mostem pontonowym i obejście krzyżackich przepraw na Drwęcy to był prawdziwy kunszt wojskowy. Wielki mistrz był zaskoczony i musiał gonić za polską armią." } },
-      { text: "Wracamy – przeprawa przez Wisłę jest zbyt ryzykowna.", next: "przed_bitwa", pts: {}, isWrong: true,
-        feedback: { type: "bad", text: "Odwrót oznaczałby klęskę bez walki. Jagiełło podjął ryzyko i wybudował most pontonowy – to był śmiały, ale konieczny ruch." } }
+      { text: "Wracamy – ze względu na zalesienie terenu nie widać, jak liczna jest armia zakonu. Lepiej nie ryzykować.", next: "przed_bitwa", pts: {}, isWrong: true,
+        feedback: { type: "bad", text: "Pole bitwy rzeczywiście nie dawało Polakom przewagi, ale odwrót oznaczałby klęskę bez walki. Jagiełło podjął ryzyko – to był śmiały, ale konieczny ruch." } }
     ]
   },
 
@@ -474,16 +474,16 @@ const scenes = {
     date: "Rankiem 15 lipca 1410",
     story: `
       <p>Jest wczesny ranek. Mgła unosi się nad polami między wsiami Grunwald i Stębark.</p>
-      <p>Nagle przybywa herold od Ulryka von Jungingena. Klęka i wręcza ci... <strong>dwa nagie miecze</strong>.</p>
-      <p>Jeden dla ciebie. Drugi dla Witolda. To wyzwanie do walki – rycerski gest, który mówi: „Wychodźcie z lasu i bijcie się z nami!"</p>
+      <p>Nagle przybywa herold od Ulryka von Jungingena. Klęka i wręcza ci... <strong>dwa nagie miecze (nagie, czyli wyjęte z futerału, z odsłoniętym ostrzem)</strong>.</p>
+      <p>Jeden dla ciebie. Drugi dla Witolda. To wyzwanie do walki – pogardliwy gest, który mówi: „bijcie się z nami zamiast chować się po lasach!"</p>
       <p>Patrzysz na miecze. Ważysz je w dłoniach. Wokół ciebie stoją tysiące rycerzy.</p>
       <p><strong>Co odpowiesz heroldowi?</strong></p>
     `,
     fact: null,
     choices: [
-      { text: "Przyjmuję miecze. Rozlega się Bogurodzica – wojsko rusza do boju!", next: "dowodzenie", pts: { dyplomacja: 1, wojsko: 2 },
-        feedback: { type: "ok", text: "Odważnie, ale Jagiełło wybrał inaczej. Atak od razu daje wrogowi przewagę – stali w gotowości i na to właśnie czekali. Zaraz zobaczysz co się naprawdę wydarzyło." } },
-      { text: "Przyjmuję miecze. Każę wojsku czekać – niech słońce wyjdzie wyżej.", next: "dowodzenie", pts: { dyplomacja: 2, wojsko: 1 },
+      { text: "„Zaraz się przekonasz, że nie brakuje nam odwagi”. Wysyłasz wojsko do boju!", next: "dowodzenie", pts: { dyplomacja: 1, wojsko: 2 },
+        feedback: { type: "ok", text: "Odważnie, ale Jagiełło wybrał inaczej. Atak od razu daje wrogowi przewagę – Krzyżacy stali w gotowości i na to właśnie czekali!" } },
+      { text: "„Przyjmuję miecze, ale jeszcze nie czas na walkę”.Czekasz, aż słońce wzejdzie wyżej.", next: "dowodzenie", pts: { dyplomacja: 2, wojsko: 1 },
         feedback: { type: "good", text: "Dokładnie tak zrobił Jagiełło! Czekał kilka godzin, modlił się i obserwował. Krzyżacy stali w pełnym słońcu i niecierpliwili się. W końcu sami ruszyli do ataku – i to był ich błąd. Zmęczeni marszem trafili na wypoczętą polską armię." } }
     ]
   },
@@ -495,16 +495,16 @@ const scenes = {
     title: "Jak dowodzisz?",
     date: "Bitwa właśnie się zaczyna",
     story: `
-      <p>Armia rusza do boju. Tysiące rycerzy, konie, kurzawa, huk dział. Bitwa zaczyna się na dobre.</p>
-      <p>Jesteś królem. Możesz stanąć na wzgórzu i obserwować całe pole bitwy – albo ruszyć razem z rycerzami i walczyć ramię w ramię.</p>
+      <p>Armia rusza do boju. Tysiące rycerzy, konie, kurzawa, huk dział. Bitwa rozpoczęła się na dobre.</p>
+      <p>Jesteś królem. Możesz stanąć na wzgórzu i obserwować całe pole bitwy albo ruszyć razem z rycerzami i walczyć ramię w ramię.</p>
       <p><strong>Jak chcesz dowodzić?</strong></p>
     `,
-    fact: { label: "Wiesz, że...?", text: "Bitwa pod Grunwaldem zaczęła się około południa i trwała do wieczora – kilka godzin krwawych walk. W średniowiecznej bitwie król był najważniejszą osobą – jego śmierć mogła zadecydować o przegranej." },
+    fact: { label: "Wiesz, że...?", text: "Bitwa pod Grunwaldem zaczęła się około południa i trwała do wieczora – kilka godzin krwawych walk. W czasie bitwy król był najważniejszą osobą – jego śmierć mogła zadecydować o przegranej." },
     choices: [
       { text: "Staję na wzgórzu i obserwuję całe pole bitwy – wysyłam rozkazy.", next: "bitwa_wygrana", pts: { dyplomacja: 2, wojsko: 1 },
         feedback: { type: "good", text: "Dokładnie tak zrobił Jagiełło! Dowodzenie ze wzgórza pozwoliło mu widzieć całą bitwę i reagować na zmiany. Ulryk von Jungingen walczył w pierwszej linii – i zginął." } },
-      { text: "Ruszam razem z rycerzami – król walczy jak rycerz!", next: "bitwa_wygrana", pts: { dyplomacja: 0, wojsko: 2 },
-        feedback: { type: "ok", text: "Odważnie, ale nierozważnie. Król walczący w pierwszej linii nie widzi całości bitwy i nie może wysyłać rozkazów. Ulryk von Jungingen zrobił właśnie to – i zginął w walce." } }
+      { text: "Ruszam razem z rycerzami – niech widzą, że król też walczy jak rycerz!", next: "bitwa_wygrana", pts: { dyplomacja: 0, wojsko: 2 },
+        feedback: { type: "ok", text: "Odważnie, ale nierozważnie. Król walczący w pierwszej linii nie widzi całości bitwy i nie może wysyłać rozkazów. Ulryk von Jungingen w końcowej fazie bitwy ruszył wraz z wojskiem i zginął w walce." } }
     ]
   },
 
@@ -514,10 +514,10 @@ const scenes = {
     sceneNum: "Scena 7 z 8",
     label: "15 lipca 1410 · Wieczór",
     title: "Zwycięstwo!",
-    date: "Bitwa trwa kilka godzin",
+    date: "Bitwa trwała kilka godzin",
     story: `
-      <p>Bitwa trwa kilka godzin. Jazda litewska uderza pierwsza, zostaje zepchnięta – wróg myśli że wygrywa. W tym momencie ciężka jazda polska uderza z całą siłą na odsłoniętych Krzyżaków.</p>
-      <p>Litwini zbierają siły i uderzają ponownie. Krzyżacy zostają otoczeni z dwóch stron.</p>
+      <p>Bitwa trwa już kilka godzin. Jazda litewska uderzyła pierwsza, została zepchnięta – wróg myślał, że wygrywa, ale ciężka jazda polska ruszyła z całą siłą na odsłoniętych Krzyżaków.</p>
+      <p>Litwini zebrali siły i uderzyli ponownie. Krzyżacy zostali otoczeni z dwóch stron.</p>
       <p>Wielki mistrz Ulryk von Jungingen pada z konia – ginie na polu bitwy. Za nim padają marszałkowie i dowódcy zakonu.</p>
       <p>Zdobywacie <strong>chorągwie krzyżackie</strong> – 51 sztandarów wroga. Bitwa wygrana!</p>
       <p><strong>Malbork, stolica zakonu, czeka. Co robisz?</strong></p>
@@ -526,8 +526,8 @@ const scenes = {
     choices: [
       { text: "Ruszam natychmiast na Malbork! Nie damy im czasu na obronę!", next: "malbork_szturm", pts: { dyplomacja: 0, wojsko: 2 },
         feedback: { type: "good", text: "Dobra decyzja! Jagiełło rzeczywiście ruszył na Malbork tak szybko jak mógł. Niestety nawet to nie wystarczyło – komtur Henryk von Plauen był szybszy i zdążył zorganizować obronę. Malbork był po prostu za silny." } },
-      { text: "Najpierw zbieramy siły i odpoczywa armia – 10 dni odpoczynku.", next: "malbork_opoznienie", pts: { dyplomacja: 1, wojsko: 0 },
-        feedback: { type: "bad", text: "Błąd! Każda godzina zwłoki to czas dla Krzyżaków na organizację obrony. Komtur Henryk von Plauen wykorzystał to opóźnienie w pełni. Historycy uważają, że to właśnie te stracone dni mogły zadecydować o tym, że Malbork nigdy nie upadł." } }
+      { text: "Najpierw zbieramy siły – 10 dni odpoczynku dla armii.", next: "malbork_opoznienie", pts: { dyplomacja: 1, wojsko: 0 },
+        feedback: { type: "bad", text: "Błąd! Każda godzina zwłoki to czas dla Krzyżaków na organizację obrony. Nie można zwlekać." } }
     ]
   },
 
@@ -539,16 +539,16 @@ const scenes = {
     date: "25 lipca 1410 – armia staje pod Malborkiem",
     story: `
       <p>Docierasz pod Malbork – największy zamek w Europie. To twierdza z czerwonej cegły, otoczona fosami i murami.</p>
-      <p>Ale bramy są zamknięte. Komtur <strong>Henryk von Plauen</strong> zdążył zebrać obrońców, zgromadzić żywność i przygotować się do długiej obrony.</p>
+      <p>Ale bramy są zamknięte. Komtur <strong>Henryk von Plauen</strong> zdążył zebrać obrońców, zgromadzić żywność i przygotować się do odparcia ataku.</p>
       <p>Oblężenie ciągnie się przez dwa miesiące. W wojsku szerzy się zaraza. Nadchodzą wieści, że Krzyżacy dostaną pomoc z Niemiec.</p>
-      <p>21 września zarządzasz odwrót. Malbork nie upadł.</p>
+      <p>19 września zarządzasz odwrót. Malbork nie upadł.</p>
     `,
-    fact: { label: "Wiesz, że...?", text: "Zamek w Malborku to do dziś największy zamek z cegły na świecie. Stoi nad rzeką Nogatem. Możesz go dzisiaj zwiedzić!" },
+    fact: { label: "Wiesz, że...?", text: "Zamek w Malborku to do dziś największy zamek z cegły na świecie. Stoi na Pomorzu Gdańskim, nad rzeką Nogatem. Dziś możesz w nim zobaczyć m.in. eksponaty związane z zakonem krzyżackim." },
     choices: [
       { text: "Ruszam pod Koronowo – jeszcze możemy zadać Krzyżakom kolejny cios!", next: "pokoj", pts: { wojsko: 1, dyplomacja: 0 },
-        feedback: { type: "good", text: "Dobrze! Bitwa pod Koronowem w październiku 1410 roku to kolejne zwycięstwo strony polskiej. Nie było tak wielkie jak Grunwald, ale wzmocniło pozycję Polski przy stole negocjacyjnym w Toruniu." } },
+        feedback: { type: "good", text: "Dobrze! Bitwa pod Koronowem w październiku 1410 roku to kolejne zwycięstwo strony polskiej. Nie było tak wielkie jak Grunwald, ale wzmocniło pozycję Polski w negocjacjach w Toruniu." } },
       { text: "Dość walki. Wracam do kraju i zaczynam negocjacje pokojowe.", next: "pokoj", pts: { dyplomacja: 1, wojsko: 0 },
-        feedback: { type: "ok", text: "Rozsądne myślenie, ale przedwczesne. Jagiełło zdecydował się jeszcze na bitwę pod Koronowem, która wzmocniła polską pozycję przed rokowaniami. Im silniejsza pozycja na polu bitwy, tym lepsze warunki przy stole pokojowym." } }
+        feedback: { type: "ok", text: "Rozsądne myślenie, ale przedwczesne. W rzeczywistości Jagiełło zdecydował się jeszcze na bitwę pod Koronowem, która wzmocniła polską pozycję przed rokowaniami. Im silniejsza pozycja na polu bitwy, tym lepsze warunki przy stole pokojowym." } }
     ]
   },
 
@@ -564,12 +564,12 @@ const scenes = {
       <p>Dwa miesiące oblężenia. W wojsku szerzy się zaraza. Z Niemiec nadciąga pomoc dla Krzyżaków. Musisz się wycofać.</p>
       <p>W październiku wygrywasz bitwę pod Koronowem – to nieco naprawia sytuację.</p>
     `,
-    fact: { label: "Wiesz, że...?", text: "Gdyby Jagiełło szybciej dotarł pod Malbork, być może zamek by upadł. To jedna z największych 'co by było gdyby' polskiej historii." },
+    fact: { label: "Wiesz, że...?", text: "Gdyby Jagiełło nacierał na Malbork jeszcze przez dwa tygodnie, być może zamek by upadł, bo jego załodze zaczynało brakować pożywienia." },
     choices: [
-      { text: "W lutym 1411 roku – czas na pokój z Krzyżakami.", next: "pokoj", pts: { dyplomacja: 1, wojsko: 0 },
-        feedback: { type: "ok", text: "Słusznie. Mimo nieudanego oblężenia Malborka, zwycięstwo pod Grunwaldem i Koronowem dało Jagielle mocną pozycję przy stole negocjacyjnym w Toruniu." } },
-      { text: "Zostajemy pod Malborkiem – oblężenie musi się udać.", next: "pokoj", pts: {}, isWrong: true,
-        feedback: { type: "bad", text: "Długie oblężenie przy braku zaopatrzenia i szerzeniu się zarazy skończyłoby się katastrofą. Jagiełło słusznie zarządził odwrót i skupił się na rokowaniach pokojowych." } }
+      { text: "Luty 1411 roku – czas na pokój z Krzyżakami.", next: "pokoj", pts: { dyplomacja: 1, wojsko: 0 },
+        feedback: { type: "ok", text: "Słusznie. Mimo nieudanego oblężenia Malborka, zwycięstwo pod Grunwaldem i Koronowem dało Jagielle mocną pozycję podczas negocjacji w Toruniu." } },
+      { text: "Nie ma mowy o podpisaniu pokoju – trzeba szykować kolejny atak.", next: "pokoj", pts: {}, isWrong: true,
+        feedback: { type: "bad", text: "Błąd. Polska i Litwa były wyczerpane po kampanii 1410 roku, a dalsze walki groziły interwencją państw sprzyjających Krzyżakom. Chyba jednak trzeba zdecydować się na negocjacje pokojowe." } }
     ]
   },
 
@@ -586,7 +586,7 @@ const scenes = {
       <p>✔ <strong>Krzyżacy mają zapłacić odszkodowanie – choć w rzeczywistości nigdy go nie uiścili w całości.</strong></p>
       <p>Potęga zakonu krzyżackiego jest złamana. Już nigdy nie będą tacy groźni. Polska staje się wielkim, szanowanym królestwem Europy.</p>
     `,
-    fact: { label: "Wiesz, że...?", text: "15 lipca – rocznica bitwy – Jagiełło ogłosił pierwszym polskim świętem państwowym. Już w rok po zwycięstwie obchodzono ten dzień uroczyście w całym królestwie!" },
+    fact: { label: "Wiesz, że...?", text: "15 lipca – dzień bitwy pod Grunwaldem – Jagiełło ogłosił pierwszym polskim świętem państwowym. Już w rok po zwycięstwie obchodzono ten dzień uroczyście w całym królestwie!" },
     choices: [
       { text: "Sprawdź swój wynik jako dowódca!", next: "ending", pts: {} }
     ]
@@ -599,10 +599,10 @@ let state = { scene: 'start', dyplomacja: 0, wojsko: 0, pendingChoice: null, sho
 
 function getEnding() {
   const d = state.dyplomacja, w = state.wojsko, t = d + w;
-  if (d >= 6) return { badge: "✦", badgeLabel: "Dyplomata", color: "#2d5a1b", title: "Wielki Dyplomata", text: "Rządziłeś mądrze. Zwycięstwo pod Grunwaldem złamało potęgę zakonu krzyżackiego – Polska stała się jednym z największych królestw Europy, a 15 lipca stał się pierwszym polskim świętem państwowym." };
+  if (d >= 6) return { badge: "✦", badgeLabel: "Dowódca", color: "#2d5a1b", title: "Wielki Dowódca", text: "Rządziłeś mądrze. Zwycięstwo pod Grunwaldem złamało potęgę zakonu krzyżackiego – Polska stała się jednym z największych królestw Europy, a 15 lipca stał się pierwszym polskim świętem państwowym." };
   if (w >= 6) return { badge: "✠", badgeLabel: "Wódz", color: "#8b0000", title: "Żelazny Wódz", text: "Twoja armia była niezwyciężona. Po Grunwaldzie zakon krzyżacki już nigdy nie odzyskał dawnej potęgi, a Polska i Litwa umocniły swoją unię na kolejne dziesięciolecia." };
   if (t >= 7) return { badge: "❧", badgeLabel: "Król", color: "#b8860b", title: "Mądry Król", text: "Łączyłeś dyplomację z siłą. Grunwald otworzył Polsce drogę do stania się wielkim królestwem – pokój toruński i unia horodelska z Litwą utrwaliły ten sukces na pokolenia." };
-  return { badge: "◈", badgeLabel: "Rycerz", color: "#4a3000", title: "Dzielny Rycerz", text: "Popełniałeś błędy, ale mimo to Polska wygrała wojnę. Grunwald zmienił historię Europy Środkowej – zakon krzyżacki przestał być groźny, a Polska rosła w siłę." };
+  return { badge: "◈", badgeLabel: "Rycerz", color: "#4a3000", title: "Dzielny Rycerz", text: "Popełniałeś błędy, ale mimo to Polska wygrała wojnę. Grunwald osłabił zakon krzyżacki i wzmocnił pozycję Polski w regionie, choć ostateczne rozstrzygnięcie przyszło dopiero pół wieku później." };
 }
 
 function renderFeedback(choice) {
@@ -690,10 +690,10 @@ function renderIntro() {
     <!-- How to play - compact, 2-col -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;">
       ${[
-        ['✦','Czytaj','każdą scenę uważnie'],
-        ['✗','Wybieraj','decyzje jak król'],
-        ['✓','Sprawdź','czy dobrze wybrałeś'],
-        ['★','Zdobądź','tytuł na końcu'],
+        ['✦','Przeczytaj','czytaj informacje bardzo uważnie'],
+        ['✗','Wybieraj','podejmuj decyzje jak mądry król'],
+        ['✓','Sprawdź','sprawdzaj, czy podjąłeś dobrą decyzję'],
+        ['★','Powtórz','zagraj jeszcze raz, jeśli popełnisz jakiś błąd'],
       ].map(([icon,bold,rest]) => `
         <div style="background:#ede0c4;border:1px solid #b8860b44;border-radius:4px;padding:9px 11px;display:flex;align-items:center;gap:9px;">
           <span style="font-family:'Cinzel',serif;font-size:16px;color:#8b6914;flex-shrink:0;width:18px;text-align:center;">${icon}</span>
