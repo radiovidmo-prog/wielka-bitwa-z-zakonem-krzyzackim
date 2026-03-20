@@ -420,10 +420,10 @@ const scenes = {
     `,
     fact: { label: "Wiesz, że...?", text: "Krzyżacy też szukali sojuszników! Obiecali pieniądze książętom z zachodu i przekonywali, że Jagiełło tak naprawdę jest poganinem. Ale Europa im nie uwierzyła." },
     choices: [
-      { text: "Zbiórka na Mazowszu i przeprawa przez Wisłę na moście pontonowym.", next: "przeprawa", pts: { dyplomacja: 1, wojsko: 1 },
-        feedback: { type: "good", text: "Świetnie! Dokładnie tak zrobił Jagiełło. Most pontonowy na Wiśle to był majstersztyk – konstrukcja z wielu łodzi połączonych belkami i linami, z pomostem ułożonym na wierzchu, która pozwoliła całej armii przeprawić się przez rzekę w miejscu, którego Krzyżacy nie strzegli." } },
-      { text: "Uderzam od razu, nie czekam na pełne siły.", next: "zbiorka_armii", pts: { dyplomacja: 0, wojsko: 1 },
-        feedback: { type: "bad", text: "Ryzykowny ruch. Bez pełnej siły armii atakujesz silniejszego wroga na jego terenie. Jagiełło cierpliwie czekał, aż wszystkie oddziały się połączą." } }
+      { text: "Zbiórka na Mazowszu i przeprawa przez Wisłę po moście, który zlecę zbudować.", next: "przeprawa", pts: { dyplomacja: 1, wojsko: 1 },
+        feedback: { type: "good", text: "Świetnie! Dokładnie tak zrobił Jagiełło. Kazał zbudować most pontonowy. To była konstrukcja z wielu łodzi połączonych belkami i linami, z pomostem ułożonym na wierzchu, która pozwoliła całej armii przeprawić się przez rzekę w miejscu, którego Krzyżacy nie strzegli." } },
+      { text: "Uderzamy od razu, przedostaniemy się przez Wisłę w jakimś płytszym miejscu.", next: "zbiorka_armii", pts: { dyplomacja: 0, wojsko: 1 },
+        feedback: { type: "bad", text: "To zły ruch. Krzyżacy dobrze znają miejsca, w których przeprawa przez Wisłę jest możliwa, i na pewno już je obstawili." } }
     ]
   },
 
@@ -693,7 +693,7 @@ function renderIntro() {
         ['✦','Przeczytaj','czytaj informacje bardzo uważnie'],
         ['✗','Wybieraj','podejmuj decyzje jak mądry król'],
         ['✓','Sprawdź','sprawdzaj, czy podjąłeś dobrą decyzję'],
-        ['★','Powtórz','zagraj jeszcze raz, jeśli popełnisz jakiś błąd'],
+        ['★','Powtórz','zagraj więcej razy, spróbuj nie popełnić żadnego błędu'],
       ].map(([icon,bold,rest]) => `
         <div style="background:#ede0c4;border:1px solid #b8860b44;border-radius:4px;padding:9px 11px;display:flex;align-items:center;gap:9px;">
           <span style="font-family:'Cinzel',serif;font-size:16px;color:#8b6914;flex-shrink:0;width:18px;text-align:center;">${icon}</span>
