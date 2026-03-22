@@ -396,7 +396,7 @@ const scenes = {
     date: "Jesteś Władysławem Jagiełłą, królem Polski i Litwy",
     story: `
       <p>Siedzisz na zamku wawelskim. Otrzymujesz pismo.</p>
-      <p>Ulryk von Jungingen – wielki mistrz Krzyżaków – <strong>wypowiada ci wojnę</strong>.</p>
+      <p><strong>Ulryk von Jungingen</strong> – wielki mistrz Krzyżaków – <strong>wypowiada ci wojnę</strong>.</p>
       <p>Krzyżacy to zakon rycerski. Mają potężne zamki, dużo pieniędzy i dobrze uzbrojoną armię. Przez lata zajmowali coraz więcej ziem. Teraz wypowiedzieli wojnę, bo chcą oderwać od Litwy ziemię zwaną <em>Żmudzią</em>, a ty jesteś sojusznikiem Litwinów.</p>
       <p><strong>Musisz działać szybko. Jak się przygotować do tej wojny?</strong></p>
     `,
@@ -404,7 +404,7 @@ const scenes = {
     choices: [
       { text: "Wysyłam posłów do Tatarów i władcy Mołdawii – potrzebuję sojuszników!", next: "sojusznicy", pts: { dyplomacja: 2, wojsko: 0 },
         feedback: { type: "good", text: "Doskonała decyzja! Jagiełło zrobił dokładnie to samo. Czas rozejmu przeznaczył na budowanie sojuszy. Tatarzy i Mołdawowie rzeczywiście stanęli po stronie polsko-litewskiej." } },
-      { text: "Zwołuję swoich rycerzy i od razu ruszam na Krzyżaków!", next: "zbiorka_armii_przyspieszenie", pts: { dyplomacja: 0, wojsko: 2 },
+      { text: "Sojusze wymagają negocjacji, na które nie ma teraz czasu. Wystarczą mi moje wojska.", next: "zbiorka_armii_przyspieszenie", pts: { dyplomacja: 0, wojsko: 2 },
         feedback: { type: "ok", text: "Armia to podstawa, ale bez sojuszników idziesz sam przeciw bogatemu zakonowi, który ma pieniądze na zaciężnych z całej Europy. Jagiełło równolegle zbierał wojska i szukał sprzymierzeńców." } }
     ]
   },
@@ -415,7 +415,7 @@ const scenes = {
     title: "Ruszamy na Malbork!",
     date: "Kwiecień–Czerwiec 1410",
     story: `
-      <p>Wysyłasz gońców do wszystkich polskich ziem. Zbieraj wojsko! Nie ma czasu na dyplomację – trzeba działać szybko.</p>
+      <p>Zimą i wiosną trwał rozejm, miałeś czas na zebranie armii.</p>
       <p>Twój brat stryjeczny Witold przyprowadza wojska litewskie. To dobry znak – unię polsko-litewską Krzyżacy będą musieli wziąć pod uwagę.</p>
       <p>Czerwiec 1410. Armia jest gotowa, ale mniejsza niż mogłaby być – Tatarzy i Mołdawowie nie przyszli, bo nie próbowałeś ich przekonać.</p>
       <p><strong>Czas ruszać. Wpierw trzeba przeprawić się z wojskiem przez Wisłę. Jak to zrobisz?</strong></p>
