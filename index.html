@@ -661,9 +661,9 @@ let state = { scene: 'start', dyplomacja: 0, wojsko: 0, pendingChoice: null, sho
 
 function getEnding() {
   const d = state.dyplomacja, w = state.wojsko, t = d + w;
-  if (d >= 6) return { badge: "✦", badgeLabel: "Dowódca", color: "#2d5a1b", title: "Wielki Dowódca", text: "Rządziłeś mądrze. Zwycięstwo pod Grunwaldem złamało potęgę zakonu krzyżackiego – Polska stała się jednym z największych królestw Europy, a 15 lipca stał się pierwszym polskim świętem państwowym." };
+  if (d >= 6) return { badge: "✦", badgeLabel: "Dowódca", color: "#2d5a1b", title: "Wielki Dowódca", text: "Rządziłeś mądrze. Zwycięstwo pod Grunwaldem złamało potęgę zakonu krzyżackiego – Królestwo Polskie umocniło swoją pozycję w Europie, a 15 lipca stał się pierwszym polskim świętem państwowym." };
   if (w >= 6) return { badge: "✠", badgeLabel: "Wódz", color: "#8b0000", title: "Żelazny Wódz", text: "Twoja armia była niezwyciężona. Po Grunwaldzie zakon krzyżacki już nigdy nie odzyskał dawnej potęgi, a Polska i Litwa umocniły swoją unię na kolejne dziesięciolecia." };
-  if (t >= 7) return { badge: "❧", badgeLabel: "Król", color: "#b8860b", title: "Mądry Król", text: "Łączyłeś dyplomację z siłą. Grunwald otworzył Polsce drogę do stania się wielkim królestwem – pokój toruński i unia horodelska z Litwą utrwaliły ten sukces na pokolenia." };
+  if (t >= 7) return { badge: "❧", badgeLabel: "Król", color: "#b8860b", title: "Mądry Król", text: "Łączyłeś dyplomację z siłą. Grunwald wzmocnił pozycję Królestwa Polskiego w Europie – zwycięstwo pozwoliło pogłębić unię z Litwą, tworząc fundament pod przyszłą potęgę Rzeczypospolitej" };
   return { badge: "◈", badgeLabel: "Rycerz", color: "#4a3000", title: "Dzielny Rycerz", text: "Popełniałeś błędy, ale mimo to Polska wygrała wojnę. Grunwald osłabił zakon krzyżacki i wzmocnił pozycję Polski w regionie, choć ostateczne rozstrzygnięcie przyszło dopiero pół wieku później." };
 }
 
