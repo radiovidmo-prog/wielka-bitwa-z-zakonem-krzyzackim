@@ -425,7 +425,7 @@ const scenes = {
       { text: "Przeprawa przez Wisłę po moście, który zlecę zbudować.", next: "przeprawa_szybka_most", pts: { dyplomacja: 0, wojsko: 1 },
         feedback: { type: "good", text: "Dobry ruch! Most pontonowy to mądre rozwiązanie. Dzięki niemu unikniesz strzeżonych przepraw i zaskoczysz Krzyżaków." } },
       { text: "Uderzamy od razu – przedostaniemy się przez Wisłę w jakimś płytszym miejscu.", next: "kleska_przeprawa", pts: {}, isWrong: true,
-        feedback: { type: "bad", text: "Zły pomysł! Krzyżacy z pewnością strzegą wszystkich znanych brodów i przepraw. Bez przygotowanego mostu ryzykujesz wpadnięcie w zasadzkę." } }
+        feedback: { type: "bad", text: "Zły pomysł! Krzyżacy z pewnością strzegą znanych brodów i przepraw. Bez przygotowanego mostu ryzykujesz wpadnięcie w zasadzkę." } }
     ]
   },
 
@@ -448,7 +448,7 @@ const scenes = {
 
   kleska_przeprawa: {
     isDefeat: true,
-    reason: "Krzyżacy spodziewali się, że tak zrobisz i obstawili wszystkie znane brody i przeprawy. Zostałeś pokonany."
+    reason: "Krzyżacy spodziewali się, że tak zrobisz i obstawili znane brody i przeprawy. Zostałeś pokonany."
   },
 
   kleska_czekanie: {
